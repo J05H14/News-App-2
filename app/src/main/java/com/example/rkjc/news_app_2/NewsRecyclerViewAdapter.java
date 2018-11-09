@@ -66,9 +66,9 @@ public class NewsRecyclerViewAdapter  extends RecyclerView.Adapter<NewsRecyclerV
         }
 
         void bind(int listIndex){
-            title.setText(mNewsItems.get(listIndex).getTitle());
-            description.setText(mNewsItems.get(listIndex).getDescription());
-            date.setText(mNewsItems.get(listIndex).getPublishedAt());
+            title.setText("Title: " + mNewsItems.get(listIndex).getTitle());
+            description.setText("Description: " + mNewsItems.get(listIndex).getDescription());
+            date.setText("Date: " + mNewsItems.get(listIndex).getPublishedAt());
             itemView.setOnClickListener(this);
         }
 
