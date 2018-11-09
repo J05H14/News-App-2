@@ -8,11 +8,11 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 public class JsonUtils {
-    public static ArrayList<NewsItem> makeNewsList(String jsonResult){
+    public static ArrayList<NewsItem> parseNews(String jsonResult){
         ArrayList<NewsItem> newsList = new ArrayList<>();
         try{
             JSONObject mainJSONObject = new JSONObject(jsonResult);
-            JSONArray items = mainJSONObject.getJSONArray(("items"));
+            JSONArray items = mainJSONObject.getJSONArray(("articles"));
 
             for(int i =0; i < items.length(); i++){
                 JSONObject item = items.getJSONObject(i);

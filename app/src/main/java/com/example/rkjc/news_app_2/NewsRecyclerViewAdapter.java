@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -21,6 +22,7 @@ public class NewsRecyclerViewAdapter  extends RecyclerView.Adapter<NewsRecyclerV
 
     Context mContext;
     ArrayList<NewsItem> mNewsItems;
+    private static final String TAG = "NewsRecyclerViewAdapter";
 
     public NewsRecyclerViewAdapter(Context context, ArrayList<NewsItem> newsItems){
         this.mContext = context;
@@ -32,10 +34,11 @@ public class NewsRecyclerViewAdapter  extends RecyclerView.Adapter<NewsRecyclerV
     public NewsRecyclerViewAdapter.NewsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
-        boolean shouldAttatachToParentImmediately = false;
+        boolean shouldAttachToParentImmediately = false;
 
-        View view = inflater.inflate(R.layout.news_item, parent,shouldAttatachToParentImmediately);
+        View view = inflater.inflate(R.layout.news_item, parent,shouldAttachToParentImmediately);
         NewsViewHolder newsHolder = new NewsViewHolder(view);
+
         return newsHolder;
     }
 
@@ -49,13 +52,14 @@ public class NewsRecyclerViewAdapter  extends RecyclerView.Adapter<NewsRecyclerV
         return mNewsItems.size();
     }
 
-    public class NewsViewHolder extends RecyclerView.ViewHolder{
+    public class NewsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView title;
         TextView description;
         TextView date;
 
         public NewsViewHolder(View itemView){
             super(itemView);
+
             title = (TextView) itemView.findViewById(R.id.title);
             description = (TextView) itemView.findViewById(R.id.description);
             date = (TextView) itemView.findViewById(R.id.date);
@@ -65,6 +69,16 @@ public class NewsRecyclerViewAdapter  extends RecyclerView.Adapter<NewsRecyclerV
             title.setText(mNewsItems.get(listIndex).getTitle());
             description.setText(mNewsItems.get(listIndex).getDescription());
             date.setText(mNewsItems.get(listIndex).getPublishedAt());
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            Log.d(TAG, "onClick: CLICKED");
+            String urlString = mNewsItems.get(getAdapterPosition()).getUrl();
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(urlString));
+            mContext.startActivity(intent);
         }
     }
 }
+
