@@ -1,5 +1,7 @@
 package com.example.rkjc.news_app_2;
 
+import android.arch.lifecycle.ViewModel;
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -21,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
     private NewsRecyclerViewAdapter mAdapter;
     private ArrayList<NewsItem> newsItems = new ArrayList<>();
     private static final String TAG = "MainActivity";
+    private NewsItemViewModel mViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
         mAdapter = new NewsRecyclerViewAdapter(this, newsItems);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-
+        mViewModel = ViewModelProviders.of(this).get(NewsItemViewModel.class);
     }
 
     class NewsQueryTask extends AsyncTask<URL, Void, String>{

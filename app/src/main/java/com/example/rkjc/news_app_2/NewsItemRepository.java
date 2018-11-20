@@ -23,6 +23,14 @@ public class NewsItemRepository {
         mAllNewsItems = mNewsDao.loadAllNewsItems();
     }
 
+    LiveData<List<NewsItem>> getmAllNewsItems() {
+        return mAllNewsItems;
+    }
+
+    public void insert (NewsItem item) {
+        new insertAsyncTask(mNewsDao).execute(item);
+    }
+
     private static class insertAsyncTask extends AsyncTask<NewsItem, Void, Void> {
         private NewsItemDao mAsyncTaskDao;
         insertAsyncTask(NewsItemDao dao) {
@@ -35,7 +43,7 @@ public class NewsItemRepository {
             return null;
         }
     }
-    private class NewsQueryTask extends AsyncTask<URL, Void, String>{
+    private class loadAsyncTask extends AsyncTask<URL, Void, String>{
         @Override
         protected void onPreExecute(){
             super.onPreExecute();
