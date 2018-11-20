@@ -66,15 +66,19 @@ public class NewsRecyclerViewAdapter  extends RecyclerView.Adapter<NewsRecyclerV
         }
 
         void bind(int listIndex){
-            title.setText("Title: " + mNewsItems.get(listIndex).getTitle());
-            description.setText("Description: " + mNewsItems.get(listIndex).getDescription());
-            date.setText("Date: " + mNewsItems.get(listIndex).getPublishedAt());
+            final String TITLE = "Title: " + mNewsItems.get(listIndex).getTitle();
+            final String DESC = "Description: " + mNewsItems.get(listIndex).getDescription();
+            final String DATE = "Date: " + mNewsItems.get(listIndex).getPublishedAt();
+
+            title.setText(TITLE);
+            description.setText(DESC);
+            date.setText(DATE);
             itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View view) {
-            Log.d(TAG, "onClick: CLICKED");
+            Log.d(TAG, "onClick: LINK CLICKED");
             String urlString = mNewsItems.get(getAdapterPosition()).getUrl();
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(urlString));
             mContext.startActivity(intent);

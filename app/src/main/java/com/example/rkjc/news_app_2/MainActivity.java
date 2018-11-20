@@ -27,6 +27,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Log.d(TAG, "onCreate: Called");
+
         mRecyclerView = (RecyclerView)findViewById(R.id.news_recyclerview);
         mAdapter = new NewsRecyclerViewAdapter(this, newsItems);
         mRecyclerView.setAdapter(mAdapter);
@@ -38,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute(){
             super.onPreExecute();
+            Log.d(TAG, "onPreExecute: onPreExecute Called");
         }
 
         @Override
@@ -48,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
             }catch(IOException e){
                 e.printStackTrace();
             }
+            Log.d(TAG, "doInBackground: " + results);
             return results;
         }
 
