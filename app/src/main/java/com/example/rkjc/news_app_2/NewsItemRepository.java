@@ -3,7 +3,6 @@ package com.example.rkjc.news_app_2;
 import android.app.Application;
 import android.arch.lifecycle.LiveData;
 import android.os.AsyncTask;
-import android.util.Log;
 
 import java.io.IOException;
 import java.net.URL;
@@ -23,17 +22,17 @@ public class NewsItemRepository {
         mAllNewsItems = mNewsDao.loadAllNewsItems();
     }
 
-    LiveData<List<NewsItem>> getmAllNewsItems() {
+    LiveData<List<NewsItem>> getAllNewsItems() {
         return mAllNewsItems;
     }
 
     public void insert (NewsItem item) {
-        new insertAsyncTask(mNewsDao).execute(item);
+        new getDataAsyncTask(mNewsDao).execute(item);
     }
 
-    private static class insertAsyncTask extends AsyncTask<NewsItem, Void, Void> {
+    private static class getDataAsyncTask extends AsyncTask<NewsItem, Void, Void> {
         private NewsItemDao mAsyncTaskDao;
-        insertAsyncTask(NewsItemDao dao) {
+        getDataAsyncTask(NewsItemDao dao) {
             mAsyncTaskDao = dao;
         }
 
@@ -43,14 +42,14 @@ public class NewsItemRepository {
             return null;
         }
     }
-    private class loadAsyncTask extends AsyncTask<URL, Void, String>{
-        @Override
-        protected void onPreExecute(){
-            super.onPreExecute();
+    private class syncDataAsyncTask extends AsyncTask<URL, Void, String>{
+        private final NewsItemDao mDao;
+        syncDataAsyncTask(NewsRoomDatabase db){
+            mDao = db.newsDao();
         }
 
         @Override
-        protected String doInBackground(URL... urls){
+        protected String doInBackground(final URL... urls) {
             String results = "";
             try{
                 results = NetworkUtils.getResponseFromHttpUrl(urls[0]);
@@ -64,7 +63,7 @@ public class NewsItemRepository {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             newsItems = JsonUtils.parseNews(s);
-            mNewsDao.insert(newsItems);
+            mDao.insert(newsItems);
         }
     }
 }
