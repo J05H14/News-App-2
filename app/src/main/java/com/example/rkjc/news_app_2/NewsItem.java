@@ -89,4 +89,12 @@ public class NewsItem {
     private String urlToImage;
     private String publishedAt;
 
+    @NonNull
+    public int getId() {
+        return id;
+    }
+
+    public void setId(@NonNull int id) {
+        this.id = id;
+    }
 }

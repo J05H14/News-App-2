@@ -13,7 +13,7 @@ public interface NewsItemDao {
     @Insert
     void insert(List<NewsItem> items);
 
-    @Delete
+    @Query("DELETE FROM news_item")
     void clearAll(); //clears all current entries in database
 
     @Query("SELECT * FROM news_item ORDER BY item ASC")

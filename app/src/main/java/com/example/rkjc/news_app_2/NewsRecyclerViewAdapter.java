@@ -16,12 +16,13 @@ import android.widget.TextView;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class NewsRecyclerViewAdapter  extends RecyclerView.Adapter<NewsRecyclerViewAdapter.NewsViewHolder> {
 
     Context mContext;
-    ArrayList<NewsItem> mNewsItems;
+    List<NewsItem> mNewsItems;
     private static final String TAG = "NewsRecyclerViewAdapter";
 
     public NewsRecyclerViewAdapter(Context context, ArrayList<NewsItem> newsItems){
