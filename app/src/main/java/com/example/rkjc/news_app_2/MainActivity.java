@@ -39,33 +39,33 @@ public class MainActivity extends AppCompatActivity {
         mViewModel = ViewModelProviders.of(this).get(NewsItemViewModel.class);
     }
 
-    class NewsQueryTask extends AsyncTask<URL, Void, String>{
-        @Override
-        protected void onPreExecute(){
-            super.onPreExecute();
-            Log.d(TAG, "onPreExecute: onPreExecute Called");
-        }
-
-        @Override
-        protected String doInBackground(URL... urls){
-            String results = "";
-            try{
-                results = NetworkUtils.getResponseFromHttpUrl(urls[0]);
-            }catch(IOException e){
-                e.printStackTrace();
-            }
-            Log.d(TAG, "doInBackground: " + results);
-            return results;
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-            newsItems = JsonUtils.parseNews(s);
-            mAdapter.mNewsItems.addAll(newsItems);
-            mAdapter.notifyDataSetChanged();
-        }
-    }
+//    class NewsQueryTask extends AsyncTask<URL, Void, String>{
+//        @Override
+//        protected void onPreExecute(){
+//            super.onPreExecute();
+//            Log.d(TAG, "onPreExecute: onPreExecute Called");
+//        }
+//
+//        @Override
+//        protected String doInBackground(URL... urls){
+//            String results = "";
+//            try{
+//                results = NetworkUtils.getResponseFromHttpUrl(urls[0]);
+//            }catch(IOException e){
+//                e.printStackTrace();
+//            }
+//            Log.d(TAG, "doInBackground: " + results);
+//            return results;
+//        }
+//
+//        @Override
+//        protected void onPostExecute(String s) {
+//            super.onPostExecute(s);
+//            newsItems = JsonUtils.parseNews(s);
+//            mAdapter.mNewsItems.addAll(newsItems);
+//            mAdapter.notifyDataSetChanged();
+//        }
+//    }
 
     private URL makeURL(){
         URL url = NetworkUtils.buildUrl();
@@ -79,8 +79,7 @@ public class MainActivity extends AppCompatActivity {
         int itemThatWasClickedId = item.getItemId();
         if(itemThatWasClickedId == R.id.action_search) {
             URL url = makeURL();
-            NewsQueryTask task = new NewsQueryTask();
-            task.execute(url);
+            mViewModel.mRepository.sync(url);
             return true;
         }
         return super.onOptionsItemSelected(item);

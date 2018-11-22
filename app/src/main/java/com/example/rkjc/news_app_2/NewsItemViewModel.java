@@ -4,12 +4,14 @@ import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
 
+import java.net.URL;
 import java.util.List;
 
 public class NewsItemViewModel extends AndroidViewModel {
 
-    private NewsItemRepository mRepository;
 
+
+    protected NewsItemRepository mRepository;
     private LiveData<List<NewsItem>> mAllNewsItems;
 
     public NewsItemViewModel (Application application) {
@@ -22,5 +24,15 @@ public class NewsItemViewModel extends AndroidViewModel {
         return mAllNewsItems;
     }
 
+    public NewsItemRepository getmRepository() {
+        return mRepository;
+    }
 
+    public void setmRepository(NewsItemRepository mRepository) {
+        this.mRepository = mRepository;
+    }
+
+    public void setmAllNewsItems(LiveData<List<NewsItem>> mAllNewsItems) {
+        this.mAllNewsItems = mAllNewsItems;
+    }
 }

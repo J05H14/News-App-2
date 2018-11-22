@@ -6,18 +6,19 @@ import android.os.AsyncTask;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class NewsItemRepository {
     protected List<NewsItem> newsItems;
 
-
+    private NewsRoomDatabase db;
     private NewsItemDao mNewsDao;
     private LiveData<List<NewsItem>> mAllNewsItems;
 
     public NewsItemRepository(Application application){
-        NewsRoomDatabase db = NewsRoomDatabase.getDatabase(application.getApplicationContext());
+        db = NewsRoomDatabase.getDatabase(application.getApplicationContext());
         mNewsDao = db.newsDao();
         mAllNewsItems = mNewsDao.loadAllNewsItems();
     }
@@ -28,6 +29,10 @@ public class NewsItemRepository {
 
     public void insert (NewsItem item) {
         new getDataAsyncTask(mNewsDao).execute(item);
+    }
+
+    public void sync (URL url){
+        new syncDataAsyncTask(db).execute(url);
     }
 
     private static class getDataAsyncTask extends AsyncTask<NewsItem, Void, Void> {
@@ -44,12 +49,14 @@ public class NewsItemRepository {
     }
     private class syncDataAsyncTask extends AsyncTask<URL, Void, String>{
         private final NewsItemDao mDao;
+        private List<NewsItem> mNewsItems = new ArrayList<NewsItem>();
         syncDataAsyncTask(NewsRoomDatabase db){
             mDao = db.newsDao();
         }
 
         @Override
         protected String doInBackground(final URL... urls) {
+            mDao.clearAll();
             String results = "";
             try{
                 results = NetworkUtils.getResponseFromHttpUrl(urls[0]);
@@ -63,7 +70,7 @@ public class NewsItemRepository {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             newsItems = JsonUtils.parseNews(s);
-            mDao.insert(newsItems);
+            mDao.insert(mNewsItems);
         }
     }
 }
