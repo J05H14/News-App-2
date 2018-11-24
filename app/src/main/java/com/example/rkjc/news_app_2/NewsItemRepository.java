@@ -11,7 +11,6 @@ import java.util.Arrays;
 import java.util.List;
 
 public class NewsItemRepository {
-    protected List<NewsItem> newsItems;
 
     private NewsRoomDatabase db;
     private NewsItemDao mNewsDao;
@@ -20,6 +19,7 @@ public class NewsItemRepository {
     public NewsItemRepository(Application application){
         db = NewsRoomDatabase.getDatabase(application.getApplicationContext());
         mNewsDao = db.newsDao();
+        get();
         mAllNewsItems = mNewsDao.loadAllNewsItems();
     }
 
@@ -27,27 +27,27 @@ public class NewsItemRepository {
         return mAllNewsItems;
     }
 
-    public void insert (NewsItem item) {
-        new getDataAsyncTask(mNewsDao).execute(item);
+    public void get () {
+        new getDataAsyncTask(mNewsDao).execute();
     }
 
     public void sync (URL url){
         new syncDataAsyncTask(db).execute(url);
     }
 
-    private static class getDataAsyncTask extends AsyncTask<NewsItem, Void, Void> {
+    private static class getDataAsyncTask extends AsyncTask<Void, Void, Void> {
         private NewsItemDao mAsyncTaskDao;
         getDataAsyncTask(NewsItemDao dao) {
             mAsyncTaskDao = dao;
         }
 
         @Override
-        protected Void doInBackground(final NewsItem... params) {
-            mAsyncTaskDao.insert(Arrays.asList(params));
+        protected Void doInBackground(final Void... params) {
+            mAsyncTaskDao.loadAllNewsItems();
             return null;
         }
     }
-    private class syncDataAsyncTask extends AsyncTask<URL, Void, String>{
+    private static class syncDataAsyncTask extends AsyncTask<URL, Void, String>{
         private final NewsItemDao mDao;
         private List<NewsItem> mNewsItems = new ArrayList<NewsItem>();
         syncDataAsyncTask(NewsRoomDatabase db){
@@ -63,14 +63,10 @@ public class NewsItemRepository {
             }catch(IOException e){
                 e.printStackTrace();
             }
+            mNewsItems = JsonUtils.parseNews(results);
+            mDao.insert(mNewsItems);
             return results;
         }
 
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-            newsItems = JsonUtils.parseNews(s);
-            mDao.insert(mNewsItems);
-        }
     }
 }

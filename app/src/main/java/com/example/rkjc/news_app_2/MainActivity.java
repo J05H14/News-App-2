@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onChanged(@Nullable List<NewsItem> newsItems) {
                 mAdapter.mNewsItems = newsItems;
+                mAdapter.notifyDataSetChanged();
             }
         });
     }
