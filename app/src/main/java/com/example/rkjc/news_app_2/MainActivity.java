@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
         Log.d(TAG, "onCreate: Called");
 
-        mRecyclerView = (RecyclerView)findViewById(R.id.news_recyclerview);
+        mRecyclerView = (RecyclerView) findViewById(R.id.news_recyclerview);
         mAdapter = new NewsRecyclerViewAdapter(this, newsItems);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -47,34 +47,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
-//    class NewsQueryTask extends AsyncTask<URL, Void, String>{
-//        @Override
-//        protected void onPreExecute(){
-//            super.onPreExecute();
-//            Log.d(TAG, "onPreExecute: onPreExecute Called");
-//        }
-//
-//        @Override
-//        protected String doInBackground(URL... urls){
-//            String results = "";
-//            try{
-//                results = NetworkUtils.getResponseFromHttpUrl(urls[0]);
-//            }catch(IOException e){
-//                e.printStackTrace();
-//            }
-//            Log.d(TAG, "doInBackground: " + results);
-//            return results;
-//        }
-//
-//        @Override
-//        protected void onPostExecute(String s) {
-//            super.onPostExecute(s);
-//            newsItems = JsonUtils.parseNews(s);
-//            mAdapter.mNewsItems.addAll(newsItems);
-//            mAdapter.notifyDataSetChanged();
-//        }
-//    }
 
     private URL makeURL(){
         URL url = NetworkUtils.buildUrl();
