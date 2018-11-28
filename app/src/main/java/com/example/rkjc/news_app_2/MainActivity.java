@@ -46,21 +46,15 @@ public class MainActivity extends AppCompatActivity {
                 mAdapter.notifyDataSetChanged();
             }
         });
+        ScheduleUtilities.scheduleRefresh(this);
     }
 
-    private URL makeURL(){
-        URL url = NetworkUtils.buildUrl();
-        String urlString = url.toString();
-        Log.d("TAG", "makeURL: " + urlString);
-        return url;
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
         int itemThatWasClickedId = item.getItemId();
         if(itemThatWasClickedId == R.id.action_search) {
-            URL url = makeURL();
-            mViewModel.mRepository.sync(url);
+            mViewModel.mRepository.sync(getApplication());
             return true;
         }
         return super.onOptionsItemSelected(item);

@@ -8,7 +8,6 @@ import android.os.AsyncTask;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class NewsItemRepository {
@@ -33,7 +32,8 @@ public class NewsItemRepository {
     }
 
     public void sync (Context context){
-        new syncDataAsyncTask(db).execute((Runnable) context);
+        URL url = NetworkUtils.buildUrl();
+        new syncDataAsyncTask(db).execute(url);
     }
 
     private static class getDataAsyncTask extends AsyncTask<Void, Void, Void> {
