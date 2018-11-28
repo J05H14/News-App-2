@@ -2,6 +2,7 @@ package com.example.rkjc.news_app_2;
 
 import android.app.Application;
 import android.arch.lifecycle.LiveData;
+import android.content.Context;
 import android.os.AsyncTask;
 
 import java.io.IOException;
@@ -31,8 +32,8 @@ public class NewsItemRepository {
         new getDataAsyncTask(mNewsDao).execute();
     }
 
-    public void sync (URL url){
-        new syncDataAsyncTask(db).execute(url);
+    public void sync (Context context){
+        new syncDataAsyncTask(db).execute((Runnable) context);
     }
 
     private static class getDataAsyncTask extends AsyncTask<Void, Void, Void> {
@@ -47,7 +48,7 @@ public class NewsItemRepository {
             return null;
         }
     }
-    private static class syncDataAsyncTask extends AsyncTask<URL, Void, String>{
+    protected static class syncDataAsyncTask extends AsyncTask<URL, Void, String>{
         private final NewsItemDao mDao;
         private List<NewsItem> mNewsItems = new ArrayList<NewsItem>();
         syncDataAsyncTask(NewsRoomDatabase db){
