@@ -11,6 +11,7 @@ import com.firebase.jobdispatcher.Job;
 import com.firebase.jobdispatcher.Lifetime;
 import com.firebase.jobdispatcher.Trigger;
 
+import java.util.concurrent.TimeUnit;
 
 public class ScheduleUtilities {
     private static final int SCHEDULE_INTERVAL_SECONDS = 10;

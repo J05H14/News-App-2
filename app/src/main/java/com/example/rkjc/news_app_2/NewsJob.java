@@ -1,10 +1,9 @@
 package com.example.rkjc.news_app_2;
 
-import android.annotation.SuppressLint;
-import android.app.job.JobParameters;
-import android.app.job.JobService;
 import android.os.AsyncTask;
 import android.widget.Toast;
+import com.firebase.jobdispatcher.JobService;
+import com.firebase.jobdispatcher.JobParameters;
 
 public class NewsJob extends JobService {
 
