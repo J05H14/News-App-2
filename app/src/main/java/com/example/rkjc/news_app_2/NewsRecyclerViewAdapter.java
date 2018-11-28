@@ -10,8 +10,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+
+import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Text;
 
@@ -57,6 +61,7 @@ public class NewsRecyclerViewAdapter  extends RecyclerView.Adapter<NewsRecyclerV
         TextView title;
         TextView description;
         TextView date;
+        ImageView img;
 
         public NewsViewHolder(View itemView){
             super(itemView);
@@ -64,17 +69,27 @@ public class NewsRecyclerViewAdapter  extends RecyclerView.Adapter<NewsRecyclerV
             title = (TextView) itemView.findViewById(R.id.title);
             description = (TextView) itemView.findViewById(R.id.description);
             date = (TextView) itemView.findViewById(R.id.date);
+            img = (ImageView) itemView.findViewById(R.id.img);
+
+            itemView.setOnClickListener(this);
         }
 
         void bind(int listIndex){
             final String TITLE = "Title: " + mNewsItems.get(listIndex).getTitle();
             final String DESC = "Description: " + mNewsItems.get(listIndex).getDescription();
             final String DATE = "Date: " + mNewsItems.get(listIndex).getPublishedAt();
+            String imgURL = mNewsItems.get(listIndex).getUrlToImage();
 
             title.setText(TITLE);
             description.setText(DESC);
             date.setText(DATE);
-            itemView.setOnClickListener(this);
+
+            Log.d(TAG, "bind: "+ imgURL);
+            if(imgURL != null){
+                Picasso.get().load(imgURL).into(img);
+            }
+
+
         }
 
         @Override

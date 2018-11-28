@@ -16,6 +16,9 @@ public class NewsItem {
     private String author;
     private String title;
     private String description;
+    private String url;
+    private String urlToImage;
+    private String publishedAt;
 
     public NewsItem(int id, String author, String title, String description, String url, String urlToImage, String publishedAt) {
         this.id = id;
@@ -85,9 +88,7 @@ public class NewsItem {
         this.publishedAt = publishedAt;
     }
 
-    private String url;
-    private String urlToImage;
-    private String publishedAt;
+
 
     @NonNull
     public int getId() {
