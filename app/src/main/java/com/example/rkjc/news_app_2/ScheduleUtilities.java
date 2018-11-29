@@ -2,6 +2,7 @@ package com.example.rkjc.news_app_2;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.firebase.jobdispatcher.Constraint;
 import com.firebase.jobdispatcher.Driver;
@@ -13,6 +14,8 @@ import com.firebase.jobdispatcher.Trigger;
 
 import java.util.concurrent.TimeUnit;
 
+import static com.example.rkjc.news_app_2.ReminderTasks.TAG;
+
 public class ScheduleUtilities {
     private static final int SCHEDULE_INTERVAL_SECONDS = 10;
     private static final int SYNC_FLEXTIME_SECONDS = 10;
@@ -22,14 +25,13 @@ public class ScheduleUtilities {
 
     synchronized public static void scheduleRefresh(@NonNull final Context context){
         if(sInitialized) return;
-
+        Log.d(TAG, "scheduleRefresh: Refreshed");
         Driver driver = new GooglePlayDriver(context);
         FirebaseJobDispatcher dispatcher = new FirebaseJobDispatcher(driver);
 
         Job constraintRefreshJob = dispatcher.newJobBuilder()
                 .setService(NewsJob.class)
                 .setTag(NEWS_JOB_TAG)
-                .setConstraints(Constraint.ON_ANY_NETWORK)
                 .setLifetime(Lifetime.FOREVER)
                 .setRecurring(true)
                 .setTrigger(Trigger.executionWindow(SCHEDULE_INTERVAL_SECONDS,

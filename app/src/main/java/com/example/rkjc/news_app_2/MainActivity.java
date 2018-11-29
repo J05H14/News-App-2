@@ -34,6 +34,8 @@ public class MainActivity extends AppCompatActivity {
 
         Log.d(TAG, "onCreate: Called");
 
+        ScheduleUtilities.scheduleRefresh(this);
+
         mRecyclerView = (RecyclerView) findViewById(R.id.news_recyclerview);
         mAdapter = new NewsRecyclerViewAdapter(this, newsItems);
         mRecyclerView.setAdapter(mAdapter);
@@ -46,7 +48,8 @@ public class MainActivity extends AppCompatActivity {
                 mAdapter.notifyDataSetChanged();
             }
         });
-        ScheduleUtilities.scheduleRefresh(this);
+
+        mViewModel.syncDB(this);
     }
 
 

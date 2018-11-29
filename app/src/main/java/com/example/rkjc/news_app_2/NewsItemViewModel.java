@@ -3,6 +3,7 @@ package com.example.rkjc.news_app_2;
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
+import android.content.Context;
 
 import java.net.URL;
 import java.util.List;
@@ -18,6 +19,10 @@ public class NewsItemViewModel extends AndroidViewModel {
         super(application);
         mRepository = new NewsItemRepository(application);
         mAllNewsItems = mRepository.getAllNewsItems();
+    }
+
+    public void syncDB(Context context){
+        mRepository.sync(context);
     }
 
     public LiveData<List<NewsItem>> getmAllNewsItems() {
