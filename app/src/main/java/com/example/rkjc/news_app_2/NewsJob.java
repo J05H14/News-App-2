@@ -9,7 +9,6 @@ import com.firebase.jobdispatcher.JobParameters;
 public class NewsJob extends JobService {
 
     static AsyncTask mBackgroundTask;
-    NewsItemRepository mRepository;
 
     private static final String TAG = "NewsJob";
     @Override
@@ -24,8 +23,8 @@ public class NewsJob extends JobService {
             @Override
             protected Object doInBackground(Object[] params) {
                 Log.d(TAG, "doInBackground: Notification Sync");
-                //mRepository.sync(NewsJob.this);
-                ReminderTasks.executeTask(NewsJob.this, ReminderTasks.ACTION_NOTIFICATION);
+                //NewsItemRepository.sync(NewsJob.this);
+                RefreshTask.executeTask(NewsJob.this, RefreshTask.ACTION_NOTIFICATION);
                 return null;
             }
 

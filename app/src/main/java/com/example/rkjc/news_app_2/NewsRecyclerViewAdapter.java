@@ -75,9 +75,9 @@ public class NewsRecyclerViewAdapter  extends RecyclerView.Adapter<NewsRecyclerV
         }
 
         void bind(int listIndex){
-            final String TITLE = "Title: " + mNewsItems.get(listIndex).getTitle();
-            final String DESC = "Description: " + mNewsItems.get(listIndex).getDescription();
-            final String DATE = "Date: " + mNewsItems.get(listIndex).getPublishedAt();
+            final String TITLE = mNewsItems.get(listIndex).getTitle();
+            final String DESC = mNewsItems.get(listIndex).getDescription();
+            final String DATE = mNewsItems.get(listIndex).getPublishedAt();
             String imgURL = mNewsItems.get(listIndex).getUrlToImage();
 
             title.setText(TITLE);

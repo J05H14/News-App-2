@@ -13,6 +13,6 @@ public class NewsIntentService extends IntentService {
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
         String action = intent.getAction();
-        ReminderTasks.executeTask(this, action);
+        RefreshTask.executeTask(this, action);
     }
 }

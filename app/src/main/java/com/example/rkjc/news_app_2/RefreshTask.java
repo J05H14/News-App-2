@@ -3,7 +3,7 @@ package com.example.rkjc.news_app_2;
 import android.content.Context;
 import android.util.Log;
 
-public class ReminderTasks {
+public class RefreshTask {
 
     public static final String ACTION_NOTIFICATION = "action-notification";
     public static final String ACTION_DISMISS = "dismiss-notification";

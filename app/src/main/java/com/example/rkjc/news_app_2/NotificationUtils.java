@@ -23,7 +23,7 @@ public class NotificationUtils {
 
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context, NOTIFICATION_ID)
                 .setColor(ContextCompat.getColor(context, R.color.colorPrimary))
-                .setSmallIcon(R.drawable.ic_error_black_24dp)
+                .setSmallIcon(R.drawable.ic_announcement_black_24dp)
                 .setContentTitle(context.getString(R.string.notification_title))
                 .setContentText(context.getString(R.string.notification_text))
                 .setStyle(new NotificationCompat.BigTextStyle().bigText(
@@ -48,7 +48,7 @@ public class NotificationUtils {
 
     private static Action cancelNotifications(Context context) {
         Intent cancelIntent = new Intent(context, NewsIntentService.class);
-        cancelIntent.setAction(ReminderTasks.ACTION_DISMISS);
+        cancelIntent.setAction(RefreshTask.ACTION_DISMISS);
         PendingIntent cancelNotificationPendingIntent = PendingIntent.getService(
                 context,
                 ACTION_CANCEL_NOTIFICATION_ID,
@@ -56,9 +56,9 @@ public class NotificationUtils {
                 PendingIntent.FLAG_UPDATE_CURRENT
         );
         Action cancelNotificationAction = new Action(R.drawable.ic_backspace_black_24dp,
-                "Ok",
+                "Dismiss",
                 cancelNotificationPendingIntent);
-        Log.d(TAG, "ok button");
+        Log.d(TAG, "Dismissed Notification");
         return cancelNotificationAction;
     }
 

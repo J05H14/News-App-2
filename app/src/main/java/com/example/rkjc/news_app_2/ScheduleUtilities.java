@@ -4,7 +4,6 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
-import com.firebase.jobdispatcher.Constraint;
 import com.firebase.jobdispatcher.Driver;
 import com.firebase.jobdispatcher.FirebaseJobDispatcher;
 import com.firebase.jobdispatcher.GooglePlayDriver;
@@ -12,9 +11,7 @@ import com.firebase.jobdispatcher.Job;
 import com.firebase.jobdispatcher.Lifetime;
 import com.firebase.jobdispatcher.Trigger;
 
-import java.util.concurrent.TimeUnit;
-
-import static com.example.rkjc.news_app_2.ReminderTasks.TAG;
+import static com.example.rkjc.news_app_2.RefreshTask.TAG;
 
 public class ScheduleUtilities {
     private static final int SCHEDULE_INTERVAL_SECONDS = 10;
